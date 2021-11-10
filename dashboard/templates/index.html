@@ -18,12 +18,62 @@
         </div>
     </header>
     <section class="grid grid-cols-2" style="height: calc(100vh - 60px);">
-        <div class="border-r-2 border-b-2 border-black py-6 px-6">Row 1</div>
+        <div class="border-r-2 border-b-2 border-black px-2 pt-2">
+            <table class="table-fixed border-collapse border border-black-800">
+                <thead>
+                    <tr>
+                        <th class="w-1/3 border border-black">Title</th>
+                        <th class="w-1/3 border border-black">Author</th>
+                        <th class="w-1/3 border border-black">Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-black">Intro to CSS</td>
+                        <td class="border border-black">Adam</td>
+                        <td class="border border-black">858</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-black">A Long and Winding Tour of the History of UI Frameworks and
+                            Tools and the Impact on Design</td>
+                        <td class="border border-black">Adam</td>
+                        <td class="border border-black">112</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-black">Intro to JavaScript</td>
+                        <td class="border border-black">Chris</td>
+                        <td class="border border-black">1,280</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="border-b-2 border-black m-0">
             <iframe src="/map" frameborder="0" style="height: 100%; width: 100%;"></iframe>
         </div>
         <div class="border-r-2 border-black py-6 px-6">Row 3</div>
-        <div class="py-6 px-6">Row 4</div>
+        <div class="py-6 px-6 text-center">
+            <p class="mt-2">
+                <select class="px-4 py-3 rounded-full">
+                    <option selected value="None">Choose a Country</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </select>
+                <select class="px-4 py-3 rounded-full">
+                    <option selected value="None">Choose a City</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </select>
+            </p>
+            <p class="mt-2"><span><strong>Start Date: </strong></span><input type="date" class="rounded"/><span><strong>End Date: </strong></span><input type="date" class="rounded" /></p>
+            <p class="mt-8">
+                <a href="#"
+                    class="text-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                    Display Data
+                </a>
+            </p>
+        </div>
     </section>
 </body>
 
