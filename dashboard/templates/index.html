@@ -117,7 +117,7 @@
                         name: city.city
                     },
                     geometry: {
-                        type: "Polygon",
+                        type: element.gs_type,
                         coordinates: element.boundaries.coordinates
                     }
                 }
@@ -150,7 +150,7 @@
 
             for (var el of data) {
                 if (el.type === "administrative") {
-                    geojson.push({ boundaries: el.geojson, name: el.display_name });
+                    geojson.push({ boundaries: el.geojson, name: el.display_name, gs_type: el.geojson.type });
                     counter += 1;
                 }
 
