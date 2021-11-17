@@ -7,8 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyzing Climate Change using Earth Surface Temperature Visualization</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
-    {{ hdr_txt }}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
 </head>
+
+<style>
+    #map {
+        height: 100%;
+    }
+</style>
 
 <body>
     <div class="relative min-h-screen md:flex" data-dev-hint="container">
@@ -17,27 +28,16 @@
             class="bg-gray-800 text-gray-100 w-1/6 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto"
             data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
             <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
-                <a href="./" class="text-white flex items-center space-x-2 px-4"
+                <p class="text-white flex items-center space-x-2 px-4"
                     title="Analyzing Climate Change using Earth Surface Temperature Visualization">
                     <span class="text-2xl font-extrabold whitespace-nowrap truncate">Analyzing Climate Change using
                         Earth Surface Temperature Visualization</span>
-                </a>
+                </p>
 
                 <nav data-dev-hint="main navigation">
-                    <!-- <p class="flex items-center space-x-2 py-2 px-4">
-                        <select class="px-4 py-3 rounded-full bg-gray-600 w-full">
-                            <option selected value="None">Choose a Country</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                        </select>
-                    </p> -->
                     <p class="flex items-center space-x-2 py-2 px-4">
-                        <select class="px-4 py-3 rounded-full bg-gray-600 w-full">
+                        <select class="px-4 py-3 rounded-full bg-gray-600 w-full" id="city_list">
                             <option selected value="None">Choose a City</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
                         </select>
                     </p>
                     <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Start Date: </strong></span><input
@@ -45,7 +45,8 @@
                     <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input
                             type="date" class="rounded bg-gray-600 w-full" /></p>
                     <p class="flex items-center space-x-2 py-2 px-4">
-                        <button class="text-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 w-full">
+                        <button
+                            class="text-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 w-full">
                             Display Data
                         </button>
                     </p>
@@ -55,23 +56,62 @@
 
         <main id="content" class="flex-1 p-6 lg:px-8 h-screen overflow-y-auto">
             <div class="mx-auto px-3 py-6">
-                <button class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md text-white bg-gray-700">
+                <button
+                    class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md text-white bg-gray-700">
                     Map
                 </button>
-                <button class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md bg-gray-100 hover:bg-gray-200">
+                <button
+                    class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md bg-gray-100 hover:bg-gray-200">
                     Graph
                 </button>
             </div>
             <div class="h-3/4 mx-auto">
                 <div class="border-4 border-dashed border-gray-200 rounded-lg h-full">
-                    {{ map_div }}
+                    <div id="map"></div>
                 </div>
             </div>
         </main>
     </div>
 </body>
-<script>
-    {{ script_txt }}
+<script type="text/javascript">
+    var map;
+    InitializeMap({
+        city: "Buffalo, NY",
+        latitude: 42.8864,
+        longitude: -78.8784
+    });
+    const cities = JSON.parse('{{cities_list | tojson}}');
+    for (var i in cities) {
+        var select = document.getElementById("city_list");
+        var option = document.createElement("option");
+        option.text = cities[i].city;
+        option.value = i;
+        select.add(option);
+    }
+    document.getElementById("city_list").addEventListener('change', function () {
+        city = cities[this.value]
+        reRenderMap(city);
+    });
+
+    function InitializeMap(city) {
+        map = L.map('map').setView([city.latitude, city.longitude], 14);
+        displayMap(map, city);
+    }
+
+    function reRenderMap(city) {
+        map.remove();
+        map = L.map('map').setView([city.latitude, city.longitude], 14);
+        displayMap(map, city);
+    }
+
+    function displayMap(map, city) {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            accessToken: 'pk.eyJ1IjoibHVjaWZlcmNyIiwiYSI6ImNrNGx0amIzejJkaHIzZm8yODB2dGx2cXYifQ.sopB-tKzpX_qXc30bv_puQ'
+        }).addTo(map);
+        L.marker([city.latitude, city.longitude]).addTo(map)
+        .bindPopup(city.city)
+        .openPopup();
+    }
 </script>
 
 </html>
