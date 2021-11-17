@@ -124,7 +124,7 @@ pip install -r requirements.txt
 Run the Project:
 
 ```
-python app.py
+python wsgi.py
 ```
 
 ## Project Structure

@@ -9,9 +9,7 @@ app = Flask(__name__)
 def execute_sql_statement(sql_statement, conn):
     cur = conn.cursor()
     cur.execute(sql_statement)
-
     rows = cur.fetchall()
-
     return rows
 
 def get_list_of_dict(keys, list_of_tuples):
@@ -31,14 +29,4 @@ def index():
     cities_list = get_cities_list()
     keys = ("city", "latitude", "longitude")
     cities_list = get_list_of_dict(keys, cities_list)
-    # start_coords = (42.9974521, -78.7907883)
-    # folium_map = folium.Map(location=start_coords, zoom_start=14)
-    # _ = folium_map._repr_html_()
-    # map_div = Markup(folium_map.get_root().html.render())
-    # hdr_txt = Markup(folium_map.get_root().header.render())
-    # script_txt = Markup(folium_map.get_root().script.render())
     return render_template("index.html", cities_list=cities_list)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
