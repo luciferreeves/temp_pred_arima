@@ -129,6 +129,7 @@ python app.py
 
 ## Project Structure
 
+```
 .
 ├── GlobalLandTemperaturesByCity.csv [The orginal CSV data file]
 ├── README.md [This File]
@@ -144,6 +145,7 @@ python app.py
 │       └── map.js [Map Rendering Algorithm]
 └── templates [Contains HTML Files]
     └── index.html [Main HTML Dashboard]
+```
 
 
 ## Dataset and Data Description
