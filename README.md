@@ -48,7 +48,7 @@ Restart your terminal.
 
 packagecloud hosts git-lfs packages for popular Linux distributions with Apt/deb and Yum/rpm based package-managers. To get started, you need to add the packagecloud repository.
 
-**These scripts must be run sudo root***** to
+**These scripts must be run as sudo (root).**
 
 #### For APT/DEB repos:
 ```
