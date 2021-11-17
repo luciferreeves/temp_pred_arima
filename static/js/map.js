@@ -4,17 +4,6 @@ InitializeMap({
     latitude: 42.8864,
     longitude: -78.8784
 });
-for (var i in cities) {
-    var select = document.getElementById("city_list");
-    var option = document.createElement("option");
-    option.text = cities[i].city;
-    option.value = i;
-    select.add(option);
-}
-document.getElementById("city_list").addEventListener('change', function () {
-    city = cities[this.value]
-    reRenderMap(city);
-});
 
 function InitializeMap(city) {
     map = L.map('map').setView([city.latitude, city.longitude], 12);

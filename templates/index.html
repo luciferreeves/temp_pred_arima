@@ -30,11 +30,14 @@
                 </p>
 
                 <nav data-dev-hint="main navigation">
-                    <p class="flex items-center space-x-2 py-2 px-4">
-                        <select class="px-4 py-3 rounded-full bg-gray-600 w-full" id="city_list">
-                            <option selected value="None">Choose a City</option>
-                        </select>
-                    </p>
+                    <div class="flex items-center space-x-2 py-2 px-4 relative w-full">
+                        <input type="text" class="bg-gray-600 rounded w-full p-3" placeholder="Search for a city..."
+                            id="citySearch" autocomplete="off" />
+                        <div id="result_container"
+                            class="absolute w-full p-3 bg-white top-14 -left-2 text-black max-h-64 overflow-y-auto hidden">
+                            <ul id="results" class="list-reset h-full block"></ul>
+                        </div>
+                    </div>
                     <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Start Date: </strong></span><input
                             type="date" class="rounded bg-gray-600 w-full" /><span></p>
                     <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input
@@ -72,5 +75,7 @@
     const cities = JSON.parse('{{cities_list | tojson}}');
 </script>
 <script src="../static/js/map.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6"></script>
+<script src="../static/js/search.js" defer></script>
 
 </html>
