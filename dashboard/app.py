@@ -1,8 +1,6 @@
 from flask import Flask, render_template
 from flask import Markup
-import folium
 import sqlite3 as sql
-from sqlite3 import Error
 import pandas as pd
 
 app = Flask(__name__)
