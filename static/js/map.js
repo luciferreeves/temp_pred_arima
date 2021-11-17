@@ -4,7 +4,6 @@ InitializeMap({
     latitude: 42.8864,
     longitude: -78.8784
 });
-const cities = JSON.parse('{{cities_list | tojson}}');
 for (var i in cities) {
     var select = document.getElementById("city_list");
     var option = document.createElement("option");
