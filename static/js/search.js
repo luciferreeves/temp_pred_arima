@@ -11,7 +11,7 @@ citySearch.addEventListener('keyup', (e) => {
         document.getElementById('results').innerHTML = "";
         for (var result of results) {
             const listElement = document.createElement('li');
-            listElement.classList.add('flex', 'items-center', 'space-x-2', 'py-2', 'px-4', 'relative', 'w-full', 'hover:bg-blue-600', 'hover:text-white', 'cursor-pointer', 'resultCity');
+            listElement.classList.add('flex', 'items-center', 'space-x-2', 'py-2', 'px-4', 'relative', 'w-full', 'hover:bg-blue-600', 'hover:text-white', 'cursor-pointer');
             listElement.setAttribute('latitude', result.item.latitude);
             listElement.setAttribute('longitude', result.item.longitude);
             listElement.innerHTML = `<span class="text-sm font-semibold">${result.item.city}</span>`;
@@ -24,7 +24,6 @@ citySearch.addEventListener('keyup', (e) => {
                     longitude: e.target.getAttribute('longitude')
                 };
                 reRenderMap(city);
-                console.log(city);
             });
             document.getElementById('results').appendChild(listElement);
         }
