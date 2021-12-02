@@ -19,7 +19,7 @@ def get_list_of_dict(keys, list_of_tuples):
      return list_of_dict
 
 def get_cities_list():
-    conn = sql.connect("./database_files/pythonproject.db")
+    conn = sql.connect("../database_files/pythonproject.db")
     sql_statement = 'SELECT DISTINCT(City_Name) as City_Name, Lat, Long FROM City_table join Loc_Table on City_Table.City_Id = Loc_table.City_Id'
     df=pd.read_sql_query(sql_statement, conn).to_records(index=False)
     return df
