@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyzing Climate Change using Earth Surface Temperature Visualization</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
@@ -14,12 +15,6 @@
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
 </head>
-
-<style>
-    #map {
-        height: 100%;
-    }
-</style>
 
 <body>
     <div class="relative min-h-screen md:flex" data-dev-hint="container">
@@ -35,11 +30,14 @@
                 </p>
 
                 <nav data-dev-hint="main navigation">
-                    <p class="flex items-center space-x-2 py-2 px-4">
-                        <select class="px-4 py-3 rounded-full bg-gray-600 w-full" id="city_list">
-                            <option selected value="None">Choose a City</option>
-                        </select>
-                    </p>
+                    <div class="flex items-center space-x-2 py-2 px-4 relative w-full">
+                        <input type="text" class="bg-gray-600 rounded w-full p-3" placeholder="Search for a city..."
+                            id="citySearch" autocomplete="off" />
+                        <div id="result_container"
+                            class="absolute w-full p-3 bg-white top-14 -left-2 text-black max-h-64 overflow-y-auto hidden">
+                            <ul id="results" class="list-reset h-full block"></ul>
+                        </div>
+                    </div>
                     <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Start Date: </strong></span><input
                             type="date" class="rounded bg-gray-600 w-full" /><span></p>
                     <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input
@@ -74,97 +72,10 @@
     </div>
 </body>
 <script type="text/javascript">
-    var map;
-    InitializeMap({
-        city: "Buffalo",
-        latitude: 42.8864,
-        longitude: -78.8784
-    });
     const cities = JSON.parse('{{cities_list | tojson}}');
-    for (var i in cities) {
-        var select = document.getElementById("city_list");
-        var option = document.createElement("option");
-        option.text = cities[i].city;
-        option.value = i;
-        select.add(option);
-    }
-    document.getElementById("city_list").addEventListener('change', function () {
-        city = cities[this.value]
-        reRenderMap(city);
-    });
-
-    function InitializeMap(city) {
-        map = L.map('map').setView([city.latitude, city.longitude], 12);
-        displayMap(map, city);
-    }
-
-    function reRenderMap(city) {
-        map.remove();
-        map = L.map('map').setView([city.latitude, city.longitude], 12);
-        displayMap(map, city);
-    }
-
-    function displayMap(map, city) {
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            accessToken: 'pk.eyJ1IjoibHVjaWZlcmNyIiwiYSI6ImNrNGx0amIzejJkaHIzZm8yODB2dGx2cXYifQ.sopB-tKzpX_qXc30bv_puQ'
-        }).addTo(map);
-        getBoundaries(city.city).then(function (bd) {
-            var lines = [];
-            for (var element of bd) {
-                const extractedBoundary = {
-                    type: 'Feature',
-                    properties: {
-                        name: city.city
-                    },
-                    geometry: {
-                        type: element.gs_type,
-                        coordinates: element.boundaries.coordinates
-                    }
-                }
-                lines.push(extractedBoundary);
-            }
-
-            var geoJSON = {
-                type: 'FeatureCollection',
-                features: lines
-            };
-
-            var gs = L.geoJSON(geoJSON).addTo(map);
-            try {
-                map.fitBounds(gs.getBounds());
-            } catch (e) {
-                L.marker([city.latitude, city.longitude]).addTo(map)
-                    .bindPopup(city.city)
-                    .openPopup();
-            }
-        })
-    }
-
-    function getBoundaries(city) {
-        geojson = [];
-
-        return fetch(`https://nominatim.openstreetmap.org/search.php?q=${city}&polygon_geojson=1&format=jsonv2`).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            counter = 0;
-
-            for (var el of data) {
-                if (el.type === "administrative") {
-                    geojson.push({ boundaries: el.geojson, name: el.display_name, gs_type: el.geojson.type });
-                    counter += 1;
-                }
-
-                if (counter === 1 && !el.display_name.includes("Rural")) {
-                    break;
-                } else if (counter === 2 && el.display_name.includes("Rural")) {
-                    break;
-                }
-            }
-            return geojson;
-        }).catch(function () {
-            return false;
-        });
-    }
 </script>
+<script src="../static/js/map.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6"></script>
+<script src="../static/js/search.js" defer></script>
 
 </html>
