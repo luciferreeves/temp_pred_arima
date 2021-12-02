@@ -39,11 +39,11 @@
                         </div>
                     </div>
                     <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Start Date: </strong></span><input
-                            type="date" class="rounded bg-gray-600 w-full" /><span></p>
+                            type="date" class="rounded bg-gray-600 w-full" id="startDate" /><span></p>
                     <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input
-                            type="date" class="rounded bg-gray-600 w-full" /></p>
+                            type="date" class="rounded bg-gray-600 w-full" id="endDate" /></p>
                     <p class="flex items-center space-x-2 py-2 px-4">
-                        <button
+                        <button id="displayData"
                             class="text-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 w-full">
                             Display Data
                         </button>
@@ -71,11 +71,36 @@
         </main>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     const cities = JSON.parse('{{cities_list | tojson}}');
 </script>
 <script src="../static/js/map.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6"></script>
 <script src="../static/js/search.js" defer></script>
+
+<script>
+    var displayDataButton = document.getElementById('displayData');
+    var startDate = document.getElementById('startDate');
+    var endDate = document.getElementById('endDate');
+
+    displayDataButton.addEventListener('click', e => {
+        e.preventDefault();
+        var startDateValue = startDate.value;
+        var endDateValue = endDate.value;
+        if (startDateValue == '' || endDateValue == '') {
+            alert('Please enter a start and end date');
+        } else if (endDateValue < startDateValue) {
+            alert('Please enter a valid date range');
+        } else {
+            $.post("/receiveDates", {
+                start_date: startDateValue,
+                end_date: endDateValue
+            }, data => {
+                console.log(data);
+            });
+        }
+    })
+</script>
 
 </html>
