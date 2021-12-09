@@ -1,6 +1,8 @@
 import sys
 import requests
+import subprocess
 
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
 def download(url, filename):
     with open(filename, 'wb') as f:

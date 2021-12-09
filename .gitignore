@@ -2,3 +2,4 @@
 arima*
 database.db
 GlobalLandTemperaturesByCity.csv
+__pycache__
