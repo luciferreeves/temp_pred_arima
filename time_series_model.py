@@ -2,6 +2,9 @@ import pandas as pd
 from sql_functions import execute_sql_statement
 import pmdarima as pm
 import pickle
+import zlib
+from os.path import exists
+from os import remove
 
 sql_stmt = "select date, city_id, cast(avg_temperature as real) as temp from temperature where date is not null and temp is not null"
 
@@ -24,3 +27,13 @@ ts_model = pm.auto_arima(data.temp, start_p=1, start_q=1,
 
 with open('arima.pkl', 'wb') as pkl:
     pickle.dump(ts_model, pkl)
+
+filename_in = "arima.pkl"
+filename_out = "arima.compressed"
+if exists(filename_out):
+    remove(filename_out)
+with open(filename_in, mode="rb") as fin, open(filename_out, mode="wb") as fout:
+    data = fin.read()
+    print("Compressing Pickle File for Version Control...")
+    compressed_data = zlib.compress(data, zlib.Z_BEST_COMPRESSION)
+    fout.write(compressed_data)
