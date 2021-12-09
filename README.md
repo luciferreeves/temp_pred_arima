@@ -16,7 +16,7 @@ Clone the project to your local machine:
 git clone https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization.git
 ```
 
-## Setting Up Dependencies
+## Setting Up Dependencies ([Skip this step](https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization))
 
 To install dependencies run:
 
@@ -24,7 +24,7 @@ To install dependencies run:
 pip install -r requirements.txt
 ```
 
-## Getting Files
+## Getting Files ([Skip this step](https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization))
 
 The project contains files which are larger than 100MB and therefore they require to be downloaded separately. Go to [latest releases page](https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization/releases/latest) and download these 3 files:
 
