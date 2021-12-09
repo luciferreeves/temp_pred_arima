@@ -1,2 +1,5 @@
 .DS_Store
-arima.pkl*
+arima*
+database*
+*.db
+*.csv
