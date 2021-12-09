@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
+from decompressor import decompress_arima
+
+decompress_arima()
 
 with open('arima.pkl', 'rb') as pkl:
     n_periods = 30
