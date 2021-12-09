@@ -32,7 +32,7 @@ The project contains files which are larger than 100MB and therefore they requir
 - database.db
 - GlobalLandTemperaturesByCity.csv
 
-Put all three in the root of the project directory. 
+Put all three in the root of the project directory. Read the [Project Structure](#project-structure) to visualize the directory structure.
 
 ## Automate Above Processes
 
