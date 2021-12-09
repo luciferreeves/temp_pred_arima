@@ -6,10 +6,15 @@ With each passing day, the threat of climate change has become an important matt
 
 In this project, we will visualize how climate change affects the surface temperature of Earth and how it will likely look in the future.
 
-## Set up Git LFS
+## Getting Files
 
-The project contains files which are larger than 100MB and therefore they require GIT LFS to be set up on your machine. Here are the instructions to setup Git LFS:
+The project contains files which are larger than 100MB and therefore they require to be downloaded separately. Go to [latest releases page](https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization/releases/latest) and download these 3 files:
 
+- arima.compressed
+- database.db
+- GlobalLandTemperaturesByCity.csv
+
+Put all three in the root of the project directory.
 ### macOS:
 
 Download HomeBrew if you don't already have it. Go to [brew.sh](https://brew.sh) or run the following command:
