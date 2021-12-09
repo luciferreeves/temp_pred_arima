@@ -6,111 +6,7 @@ With each passing day, the threat of climate change has become an important matt
 
 In this project, we will visualize how climate change affects the surface temperature of Earth and how it will likely look in the future.
 
-## Getting Files
-
-The project contains files which are larger than 100MB and therefore they require to be downloaded separately. Go to [latest releases page](https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization/releases/latest) and download these 3 files:
-
-- arima.compressed
-- database.db
-- GlobalLandTemperaturesByCity.csv
-
-Put all three in the root of the project directory.
-### macOS:
-
-Download HomeBrew if you don't already have it. Go to [brew.sh](https://brew.sh) or run the following command:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Once done, run the following command:
-
-```bash
-brew install git-lfs
-```
-
-Then, install Git LFS, by running the following command (notice there is no dash(-) between `git` and `lfs`):
-
-```bash
-git lfs install
-```
-
-Restart your terminal.
-
-### Windows:
-
-Download the latest version of Git LFS from [the Git LFS website](https://git-lfs.github.com).
-
-Then, install Git LFS, by running the following command (notice there is no dash(-) between `git` and `lfs`):
-
-```bash
-git lfs install
-```
-
-Restart your terminal.
-
-### Linux (Debian or RHEL based):
-
-packagecloud hosts git-lfs packages for popular Linux distributions with Apt/deb and Yum/rpm based package-managers. To get started, you need to add the packagecloud repository.
-
-**These scripts must be run as sudo (root).**
-
-#### For APT/DEB repos:
-```
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-```
-
-#### For Yum/RPM repos:
-
-```
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
-```
-
-If you are running LinuxMint 17.1 Rebecca, which is downstream of Ubuntu Trusty and Debian Jessie, you can run:
-
-```
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | os=debian dist=jessie sudo -E sudo bash
-```
-
-Finally Install Git LFS:
-
-#### For APT/Debian based distributions:
-
-```
-sudo apt-get install git-lfs
-```
-
-#### For Yum/RPM based distributions:
-
-```
-sudo yum install git-lfs
-```
-
-Then, install Git LFS, by running the following command (notice there is no dash(-) between `git` and `lfs`):
-
-```bash
-git lfs install
-```
-
-Restart your terminal.
-
-### Arch Linux:
-
-Git LFS is available in the Arch repository. You can install by running this as root (sudo):
-
-```
-pacman -S git-lfs
-```
-
-Then, install Git LFS, by running the following command (notice there is no dash(-) between `git` and `lfs`):
-
-```bash
-git lfs install
-```
-
-Restart your terminal.
-
-## Running the Project
+## Clone the Project
 
 You need Python on your machine in order to run the project. Get it from the [Python website](http://python.org) for your system. We recommend using **_Python 3.8.8_**.
 
@@ -120,38 +16,35 @@ Clone the project to your local machine:
 git clone https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization.git
 ```
 
-Install dependencies:
+## Setting Up Dependencies
+
+To install dependencies run:
 
 ```
 pip install -r requirements.txt
 ```
 
-Run the Project:
+## Getting Files
+
+The project contains files which are larger than 100MB and therefore they require to be downloaded separately. Go to [latest releases page](https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization/releases/latest) and download these 3 files:
+
+- arima.compressed
+- database.db
+- GlobalLandTemperaturesByCity.csv
+
+Put all three in the root of the project directory. 
+
+## Automate Above Processes
+
+You can also run [initial_setup.py](initial_setup.py) and these files will be downloaded automatically. If you are missing any dependencies, then those would be installed automatically as well.
+
+## Start Flask Server
+
+Run the Project using the following command:
 
 ```
 python app.py
 ```
-
-## Project Structure
-
-```
-.
-├── GlobalLandTemperaturesByCity.csv [The orginal CSV data file]
-├── README.md [This File]
-├── app.py [Main Script]
-├── database.db [Normalized database]
-├── database_creation_script.py [Script to create the database]
-├── dbcreation.ipynb [Notebook to create the database]
-├── requirements.txt [The requirements file]
-├── static [Contains Static Files]
-│   ├── css [Contains CSS Files]
-│   │   └── style.css [Internal Styles]
-│   └── js [Contains JavaScript Files]
-│       └── map.js [Map Rendering Algorithm]
-└── templates [Contains HTML Files]
-    └── index.html [Main HTML Dashboard]
-```
-
 
 ## Dataset and Data Description
 
@@ -164,6 +57,43 @@ Other files include – Global Average Land Temperature record for Country, Glob
 The raw data collected from Berkley Earth has been processed and cleaned by many developers and made into a proper dataset; researchers can work upon it and bring more insights. We will be demonstrating time series analysis over this dataset.
 
 We will also build a machine learning model that predicts how the Earth's surface temperature is likely going to be in the future. Finally, we will package everything and put it in a dashboard, where users can see heat maps and visualize the changes for themselves.
+
+## Project Structure
+
+```
+.
+├── GlobalLandTemperaturesByCity.csv
+├── LICENSE
+├── README.md
+├── __dbscripts__
+│   ├── database_creation_script.py
+│   └── dbcreation.ipynb
+├── app.py
+├── arima.compressed
+├── arima.pkl
+├── cities.json
+├── database.db
+├── functions
+│   ├── array_functions.py
+│   └── sql_functions.py
+├── initial_setup.py
+├── libs
+│   ├── __pycache__
+│   │   └── decompressor.cpython-38.pyc
+│   ├── decompressor.py
+│   └── zipper.py
+├── model_builder.py
+├── predictor.py
+├── requirements.txt
+├── static
+│   ├── css
+│   │   └── style.css
+│   └── js
+│       ├── map.js
+│       └── search.js
+└── templates
+    └── index.html
+```
 
 ## Refrences:
 
