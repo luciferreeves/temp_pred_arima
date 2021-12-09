@@ -36,7 +36,7 @@ Put all three in the root of the project directory. Read the [Project Structure]
 
 ## Automate Above Processes
 
-You can also run [initial_setup.py](initial_setup.py) and these files will be downloaded automatically. If you are missing any dependencies, then those would be installed automatically as well.
+You can also run [initial_setup.py](initial_setup.py) and files listed in the [Getting Files](#getting-files) section will be downloaded automatically. If you are missing any dependencies, then those would be installed automatically as well.
 
 To do so, run the following command:
 
