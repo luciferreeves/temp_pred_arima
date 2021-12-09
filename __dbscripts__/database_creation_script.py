@@ -38,7 +38,7 @@ def execute_sql_statement(sql_statement, conn):
 
     return rows
 
-df=pd.read_csv("GlobalLandTemperaturesByCity.csv")
+df=pd.read_csv("..GlobalLandTemperaturesByCity.csv")
 data=df[df.dt>"1949-12-31"]
 data_for_loc_table=data[['City','Latitude','Longitude']]
 data_for_loc_table=data_for_loc_table.to_records(index=False)

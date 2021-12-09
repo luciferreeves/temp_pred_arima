@@ -14,8 +14,3 @@ def run_sql_pandas(sql_statement):
     conn = sql.connect("database.db")
     df = pd.read_sql_query(sql_statement, conn).to_records(index=False)
     return df
-
-
-def get_list_of_dict(keys, list_of_tuples):
-    list_of_dict = [dict(zip(keys, values)) for values in list_of_tuples]
-    return list_of_dict

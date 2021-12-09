@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
-from decompressor import decompress_arima
+from libs.decompressor import decompress_arima
 
 decompress_arima()
 

@@ -1,10 +1,7 @@
 import pandas as pd
-from sql_functions import execute_sql_statement
+from functions.sql_functions import execute_sql_statement
 import pmdarima as pm
 import pickle
-import zlib
-from os.path import exists
-from os import remove
 
 sql_stmt = "select date, city_id, cast(avg_temperature as real) as temp from temperature where date is not null and temp is not null"
 
