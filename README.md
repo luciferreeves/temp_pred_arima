@@ -38,6 +38,12 @@ Put all three in the root of the project directory.
 
 You can also run [initial_setup.py](initial_setup.py) and these files will be downloaded automatically. If you are missing any dependencies, then those would be installed automatically as well.
 
+To do so, run the following command:
+
+```
+python initial_setup.py
+```
+
 ## Start Flask Server
 
 Run the Project using the following command:
