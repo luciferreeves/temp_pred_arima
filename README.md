@@ -84,8 +84,6 @@ We will also build a machine learning model that predicts how the Earth's surfac
 │   └── sql_functions.py
 ├── initial_setup.py
 ├── libs
-│   ├── __pycache__
-│   │   └── decompressor.cpython-38.pyc
 │   ├── decompressor.py
 │   └── zipper.py
 ├── model_builder.py
