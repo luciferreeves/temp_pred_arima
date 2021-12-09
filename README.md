@@ -1,5 +1,7 @@
 # Analyzing Climate Change using Earth Surface Temperature Visualization
 
+> **_Note:_ Make sure you have around 15 GB space free on your machine for this project to store files.**
+
 ## Introduction to the Project
 
 With each passing day, the threat of climate change has become an important matter to be concerned about. The emission of greenhouse gases like carbon dioxide and methane and drastic weather changes lead to global warming. Over recent years, there has been a massive increase in Earth’s surface temperature, rising heat waves, melting glaciers, and decreasing land size. Not only humans but also plants and animal kingdoms are being affected rigorously.
