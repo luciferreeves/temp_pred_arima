@@ -1,5 +1,4 @@
 .DS_Store
 arima*
-database*
-*.db
-*.csv
+database.db
+GlobalLandTemperaturesByCity.csv
