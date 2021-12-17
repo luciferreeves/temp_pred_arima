@@ -2,10 +2,8 @@ from flask import Flask, render_template
 from flask import request, jsonify
 import pandas as pd
 import json
-from libs.decompressor import decompress_arima
 from predictor import render_plot
 
-decompress_arima()
 app = Flask(__name__)
 
 @app.route("/")

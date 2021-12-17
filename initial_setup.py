@@ -24,16 +24,16 @@ def download(url, filename):
                 sys.stdout.flush()
     sys.stdout.write('\n')
 
-if not exists('arima.pkl'):
-    if not exists('arima.compressed'):
-        print('[*] Downloading arima.compressed')
-        download("https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization/releases/download/large_files/arima.compressed", 'arima.compressed')
-    print('[*] Decompressing arima.compressed')
-    decompress_arima()
+# if not exists('arima.pkl'):
+#     if not exists('arima.compressed'):
+#         print('[*] Downloading arima.compressed')
+#         download("https://github.com/luciferreeves/Analyzing-Climate-Change-using-Earth-Surface-Temperature-Visualization/releases/download/large_files/arima.compressed", 'arima.compressed')
+#     print('[*] Decompressing arima.compressed')
+#     decompress_arima()
     
-if not exists('arima.pkl') and exists('arima.compressed'):
-    print('[*] Decompressing arima.compressed')
-    decompress_arima()
+# if not exists('arima.pkl') and exists('arima.compressed'):
+#     print('[*] Decompressing arima.compressed')
+#     decompress_arima()
 
 if not exists('database.db'):
     print('[*] Downloading database.db')
