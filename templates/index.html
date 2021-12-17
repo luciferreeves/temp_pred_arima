@@ -38,14 +38,14 @@
                             <ul id="results" class="list-reset h-full block"></ul>
                         </div>
                     </div>
-                    <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Start Date: </strong></span><input
-                            type="date" class="rounded bg-gray-600 w-full" id="startDate" /><span></p>
-                    <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input
-                            type="date" class="rounded bg-gray-600 w-full" id="endDate" /></p>
+                    <!-- <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Date: </strong></span><input
+                            type="date" class="rounded bg-gray-600 w-full" id="startDate" /><span></p> -->
+                    <!-- <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input -->
+                    <!-- type="date" class="rounded bg-gray-600 w-full" id="endDate" /></p> -->
                     <p class="flex items-center space-x-2 py-2 px-4">
                         <button id="displayData"
-                            class="text-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 w-full">
-                            Display Data
+                            class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-150 w-full text-center">
+                            Predict for Next 7 Days
                         </button>
                     </p>
                 </nav>
@@ -53,7 +53,7 @@
         </aside>
 
         <main id="content" class="flex-1 p-6 lg:px-8 h-screen overflow-y-auto">
-            <div class="mx-auto px-3 py-6">
+            <!-- <div class="mx-auto px-3 py-6">
                 <button
                     class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md text-white bg-gray-700">
                     Map
@@ -62,46 +62,39 @@
                     class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md bg-gray-100 hover:bg-gray-200">
                     Graph
                 </button>
-            </div>
+            </div> -->
             <div class="h-3/4 mx-auto">
                 <div class="border-4 border-dashed border-gray-200 rounded-lg h-full">
                     <div id="map"></div>
                 </div>
             </div>
+            <div class="mx-auto px-3 py-6 text-center">
+                <button type="button"
+                    class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed hidden"
+                    disabled="" id="processingButton">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    Processing...
+                </button>
+                <div id="predictionImage" class="w-full"></div>
+            </div>
         </main>
     </div>
 </body>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     const cities = JSON.parse('{{cities_list | tojson}}');
-    console.log(cities);
 </script>
 <script src="../static/js/map.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6"></script>
 <script src="../static/js/search.js" defer></script>
-
-<script>
-    var displayDataButton = document.getElementById('displayData');
-    var startDate = document.getElementById('startDate');
-    var endDate = document.getElementById('endDate');
-
-    displayDataButton.addEventListener('click', e => {
-        e.preventDefault();
-        var startDateValue = startDate.value;
-        var endDateValue = endDate.value;
-        if (startDateValue == '' || endDateValue == '') {
-            alert('Please enter a start and end date');
-        } else if (endDateValue < startDateValue) {
-            alert('Please enter a valid date range');
-        } else {
-            $.post("/receiveDates", {
-                start_date: startDateValue,
-                end_date: endDateValue
-            }, data => {
-                console.log(data);
-            });
-        }
-    })
-</script>
+<script src="../static/js/prediction.js" defer></script>
 
 </html>

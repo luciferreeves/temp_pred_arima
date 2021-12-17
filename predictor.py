@@ -1,17 +1,38 @@
 import pandas as pd
+import matplotlib
+import numpy as np
+from functions.sql_functions import execute_sql_statement
+import pmdarima as pm
+import io
+import base64
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import pickle
-from libs.decompressor import decompress_arima
 
-decompress_arima()
 
-with open('arima.pkl', 'rb') as pkl:
-    n_periods = 30
-    fc, confint = pickle.load(pkl).predict(
+def render_plot(dates, city_id):
+    sql_stmt = "select date, city_id, cast(avg_temperature as real) as temp from temperature where date is not null and temp is not null and city_id = " + str(city_id)
+    result = execute_sql_statement(sql_stmt)
+    data = pd.DataFrame(result, columns=["date", "city_id", "temp"])
+    data.set_index(["date", "city_id"], inplace=True)
+    ts_model = pm.auto_arima(data.temp, start_p=1, start_q=1,
+                         test='adf',
+                         max_p=3, max_q=3,
+                         m=5,
+                         d=None,
+                         seasonal=False,
+                         start_P=0,
+                         D=0,
+                         trace=True,
+                         error_action='ignore',
+                         suppress_warnings=True,
+                         stepwise=True)
+    
+    n_periods = len(dates)
+    n_years = dates
+    city_ids = np.repeat(city_id, n_periods)
+    fc, confint = ts_model.predict(
         n_periods=n_periods, return_conf_int=True)
-    n_years = ['1960-12-02', '1960-12-03', '1960-12-04', '1960-12-05', '1960-12-06', '1960-12-07', '1960-12-08', '1960-12-09', '1960-12-10', '1960-12-11', '1960-12-12', '1960-12-13', '1960-12-14', '1960-12-15', '1960-12-16',
-               '1960-12-17', '1960-12-18', '1960-12-19', '1960-12-20', '1960-12-21', '1960-12-22', '1960-12-23', '1960-12-24', '1960-12-25', '1960-12-26', '1960-12-27', '1960-12-28', '1960-12-29', '1960-12-30', '1960-12-31']
-    city_ids = ["1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031", "1031"]
+
     fc_ind = pd.Series(n_years, city_ids)
 
     fc_series = pd.Series(fc, index=fc_ind)
@@ -23,4 +44,25 @@ with open('arima.pkl', 'rb') as pkl:
                      lower_series,
                      upper_series,
                      color="k", alpha=.35)
-    plt.show()
+    plt.title("Temperature Forecast")
+    plt.xlabel("Date")
+    plt.ylabel("Temperature (°C)")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    ax = plt.gca()
+    line = ax.lines[0]
+    x_data = line.get_xdata().tolist()
+    y_data = line.get_ydata().tolist()
+    upper_bound = upper_series.tolist()
+    lower_bound = lower_series.tolist()
+
+    # Convert x_data, y_data, upper_bound, lower_bound to dict
+    data = {
+        "x_data": x_data,
+        "y_data": y_data,
+        "upper_bound": upper_bound,
+        "lower_bound": lower_bound
+    }
+
+    return data
+
