@@ -54,6 +54,7 @@ function predictData(startDate, endDate, cityId, cityName, latitude, longitude) 
         alert('Please enter a valid date range');
     } else {
         displayDataButton.classList.add('hidden');
+        document.getElementById('citySearch').setAttribute('disabled', 'disabled');
         document.getElementById("processingButton").classList.remove('hidden');
         document.getElementById('predictionImage').innerHTML = "";
         $.post("/receiveDates", {
@@ -124,7 +125,7 @@ function predictData(startDate, endDate, cityId, cityName, latitude, longitude) 
 
             document.getElementById("processingButton").classList.add('hidden');
             displayDataButton.classList.remove('hidden');
-
+            document.getElementById('citySearch').removeAttribute('disabled');
             document.getElementById('rangeContainer').classList.remove('hidden');
             changeColor({
                 city: cityName,
