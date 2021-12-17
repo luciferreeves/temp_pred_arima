@@ -28,6 +28,8 @@ citySearch.addEventListener('keyup', (e) => {
                 citySearch.removeAttribute('data-city-id');
                 citySearch.value = e.target.innerText;
                 citySearch.setAttribute('data-city-id', e.target.getAttribute('cityId'));
+                citySearch.setAttribute('data-latitude', e.target.getAttribute('latitude'));
+                citySearch.setAttribute('data-longitude', e.target.getAttribute('longitude'));
                 resultContainer.classList.add('hidden');
                 resultContainer.innerHTML = "";
                 city = {
@@ -36,6 +38,9 @@ citySearch.addEventListener('keyup', (e) => {
                     longitude: e.target.getAttribute('longitude')
                 };
                 reRenderMap(city);
+                document.getElementById('rangeContainer').classList.add('hidden');
+                $rangeInput = $('.range input');
+                $rangeInput.val(1).trigger('input');
             });
             document.getElementById('results').appendChild(listElement);
         }

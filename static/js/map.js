@@ -10,13 +10,13 @@ function InitializeMap(city) {
     displayMap(map, city);
 }
 
-function reRenderMap(city) {
+function reRenderMap(city, style={}) {
     map.remove();
     map = L.map('map').setView([city.latitude, city.longitude], 12);
-    displayMap(map, city);
+    displayMap(map, city, style);
 }
 
-function displayMap(map, city) {
+function displayMap(map, city, style = {}) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         accessToken: 'pk.eyJ1IjoibHVjaWZlcmNyIiwiYSI6ImNrNGx0amIzejJkaHIzZm8yODB2dGx2cXYifQ.sopB-tKzpX_qXc30bv_puQ'
     }).addTo(map);
@@ -40,8 +40,14 @@ function displayMap(map, city) {
             type: 'FeatureCollection',
             features: lines
         };
-
+        var fg = L.featureGroup().addTo(map);
         var gs = L.geoJSON(geoJSON).addTo(map);
+
+        if (style.fillColor) {
+            fg.clearLayers();
+            gs.setStyle(style);
+        }
+
         try {
             map.fitBounds(gs.getBounds());
         } catch (e) {
@@ -77,3 +83,22 @@ function getBoundaries(city) {
         return false;
     });
 }
+
+function getColors(temperature) {
+    // Generate relevant colors from temperature values for the map and return them
+    // Set hex values to 0.3 opacity
+    return temperature > 40 ? '#ff0000' : temperature > 30 ? '#ff4000' : temperature > 20 ? '#ff8000' : temperature > 10 ? '#ffbf00' : temperature > 0 ? '#ffff00' : temperature > -10 ? '#bfff00' : temperature > -20 ? '#80ff00' : temperature > -30 ? '#40ff00' : temperature > -40 ? '#00ff00' : '#00ff40';
+}
+
+// Function to change color of the map geoJSON based on provided temperature input
+function changeColor(city, temperature) {
+    var color = getColors(temperature);
+    var style = {
+        fillColor: color,
+        fillOpacity: 0.3,
+        color: color,
+        weight: 1
+    };
+    reRenderMap(city, style);
+}
+

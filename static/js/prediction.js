@@ -1,5 +1,5 @@
 var displayDataButton = document.getElementById('displayData');
-
+var temperatureData = [];
 var today = new Date();
 var dd = today.getDate();
 var mm = today.getMonth() + 1; //January is 0!
@@ -38,10 +38,14 @@ displayDataButton.addEventListener('click', e => {
     e.preventDefault();
     var cityId = document.getElementById('citySearch').getAttribute('data-city-id');
     var cityName = document.getElementById('citySearch').value;
-    predictData(startDate, endDate, cityId, cityName);
+    var latitude = document.getElementById('citySearch').getAttribute('latitude');
+    var longitude = document.getElementById('citySearch').getAttribute('longitude');
+    predictData(startDate, endDate, cityId, cityName, latitude, longitude);
 })
 
-function predictData(startDate, endDate, cityId, cityName) {
+function predictData(startDate, endDate, cityId, cityName, latitude, longitude) {
+    latitude ? latitude : latitude = 42.8864;
+    longitude ? longitude : longitude = -78.8784;
     var startDateValue = startDate;
     var endDateValue = endDate;
     if (startDateValue == '' || endDateValue == '') {
@@ -57,13 +61,13 @@ function predictData(startDate, endDate, cityId, cityName) {
             end_date: endDateValue,
             city_id: cityId
         }, data => {
-            console.log(data);
             var x = data.x_data;
 
             var y = data.y_data.map(function (item) {
                 return Math.round(item * 100) / 100;
             });
 
+            temperatureData = y;
 
             var upperBound = data.upper_bound.map(function (item) {
                 return Math.round(item * 100) / 100;
@@ -79,7 +83,7 @@ function predictData(startDate, endDate, cityId, cityName) {
                 mode: "lines",
                 name: "Lower Bound",
                 type: "scatter",
-                line: { color: "rgb(0,100,80)" }
+                line: { color: "#ffbf00" }
             };
 
             var trace2 = {
@@ -89,7 +93,7 @@ function predictData(startDate, endDate, cityId, cityName) {
                 fillcolor: "rgba(231,107,243,0.0)",
                 mode: "lines",
                 fill: "tozerox",
-                line: { color: "rgb(31, 119, 180)" },
+                line: { color: "#ff8000" },
                 name: "Prediction"
             };
 
@@ -100,7 +104,7 @@ function predictData(startDate, endDate, cityId, cityName) {
                 mode: "lines",
                 name: "Upper Bound",
                 type: "scatter",
-                line: { color: "rgb(0,176,246)" }
+                line: { color: "#ff4000" }
             };
 
             var data = [trace1, trace2, trace3];
@@ -120,6 +124,13 @@ function predictData(startDate, endDate, cityId, cityName) {
 
             document.getElementById("processingButton").classList.add('hidden');
             displayDataButton.classList.remove('hidden');
+
+            document.getElementById('rangeContainer').classList.remove('hidden');
+            changeColor({
+                city: cityName,
+                latitude: latitude,
+                longitude: longitude
+            }, temperatureData[0])
         });
     }
 }

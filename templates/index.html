@@ -66,6 +66,30 @@
             <div class="h-3/4 mx-auto">
                 <div class="border-4 border-dashed border-gray-200 rounded-lg h-full">
                     <div id="map"></div>
+                    <div id="rangeContainer" class="rangeContainer hidden" style="    position: relative;
+                    top: -12vh;
+                    z-index: 1000;
+                    right: 0vw;
+                    background: white;
+                    padding: 30px 30px 30px 30px;
+                    width: 615px;">
+                        <p style="position: relative;
+                        top: -20px;
+                        left: -15px;">Temperature Visualization:</p>
+                        <div class="range">
+                            <input id="changeDate" type="range" min="1" max="7" steps="1" value="1">
+                        </div>
+
+                        <ul class="range-labels">
+                            <li class="active selected">Today</li>
+                            <li>2 days</li>
+                            <li>3 days</li>
+                            <li>4 days</li>
+                            <li>5 days</li>
+                            <li>6 days</li>
+                            <li>7 days</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="mx-auto px-3 py-6 text-center">
@@ -89,6 +113,7 @@
 </body>
 <script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="../static/js/timeline-slider.js" defer></script>
 <script type="text/javascript">
     const cities = JSON.parse('{{cities_list | tojson}}');
 </script>
@@ -96,5 +121,58 @@
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6"></script>
 <script src="../static/js/search.js" defer></script>
 <script src="../static/js/prediction.js" defer></script>
+<script>
+    var sheet = document.createElement('style'),
+        $rangeInput = $('.range input'),
+        prefs = ['webkit-slider-runnable-track', 'moz-range-track', 'ms-track'];
+
+    document.body.appendChild(sheet);
+
+    var getTrackStyle = function (el) {
+        var curVal = el.value,
+            val = (curVal - 1) * 16.666666667,
+            style = '';
+
+        // Set active label
+        $('.range-labels li').removeClass('active selected');
+
+        var curLabel = $('.range-labels').find('li:nth-child(' + curVal + ')');
+
+        curLabel.addClass('active selected');
+        curLabel.prevAll().addClass('selected');
+
+        // Change background gradient
+        for (var i = 0; i < prefs.length; i++) {
+            style += '.range {background: linear-gradient(to right, #37adbf 0%, #37adbf ' + val + '%, #fff ' + val + '%, #fff 100%)}';
+            style += '.range input::-' + prefs[i] + '{background: linear-gradient(to right, #37adbf 0%, #37adbf ' + val + '%, #b2b2b2 ' + val + '%, #b2b2b2 100%)}';
+        }
+
+        return style;
+    }
+
+    $rangeInput.on('input', function () {
+        sheet.textContent = getTrackStyle(this);
+    });
+
+    // Change input value on label click
+    $('.range-labels li').on('click', function () {
+        var index = $(this).index();
+
+        $rangeInput.val(index + 1).trigger('input');
+        var currentCityName = document.getElementById('citySearch').value || 'Buffalo';
+        var latitude = document.getElementById('citySearch').getAttribute('latitude') || '42.8864';
+        var longitude = document.getElementById('citySearch').getAttribute('longitude') || '-78.8784';
+        changeColor({ city: currentCityName, latitude: latitude, longitude: longitude }, temperatureData[index]);
+
+    });
+
+    document.getElementById('changeDate').addEventListener('change', (e) => {
+        var currentCityName = document.getElementById('citySearch').value || 'Buffalo';
+        var latitude = document.getElementById('citySearch').getAttribute('latitude') || '42.8864';
+        var longitude = document.getElementById('citySearch').getAttribute('longitude') || '-78.8784';
+        changeColor({ city: currentCityName, latitude: latitude, longitude: longitude }, temperatureData[e.target.value - 1]);
+    })
+
+</script>
 
 </html>
