@@ -40,7 +40,11 @@ displayDataButton.addEventListener('click', e => {
     var cityName = document.getElementById('citySearch').value;
     var latitude = document.getElementById('citySearch').getAttribute('latitude');
     var longitude = document.getElementById('citySearch').getAttribute('longitude');
-    predictData(startDate, endDate, cityId, cityName, latitude, longitude);
+    if (!cityName) {
+        alert('Please enter a city name');
+    } else {
+        predictData(startDate, endDate, cityId, cityName, latitude, longitude);
+    }
 })
 
 function predictData(startDate, endDate, cityId, cityName, latitude, longitude) {
@@ -53,7 +57,7 @@ function predictData(startDate, endDate, cityId, cityName, latitude, longitude) 
     } else if (endDateValue < startDateValue) {
         alert('Please enter a valid date range');
     } else {
-        displayDataButton.classList.add('hidden');
+        displayDataButton.setAttribute('disabled', 'disabled');
         document.getElementById('citySearch').setAttribute('disabled', 'disabled');
         document.getElementById("processingButton").classList.remove('hidden');
         document.getElementById('predictionImage').innerHTML = "";
@@ -124,8 +128,8 @@ function predictData(startDate, endDate, cityId, cityName, latitude, longitude) 
             Plotly.newPlot('predictionImage', data, layout);
 
             document.getElementById("processingButton").classList.add('hidden');
-            displayDataButton.classList.remove('hidden');
             document.getElementById('citySearch').removeAttribute('disabled');
+            displayDataButton.removeAttribute('disabled');
             document.getElementById('rangeContainer').classList.remove('hidden');
             changeColor({
                 city: cityName,
