@@ -19,7 +19,7 @@ citySearch.addEventListener('keyup', (e) => {
         }
         for (var result of results) {
             const listElement = document.createElement('li');
-            listElement.classList.add('flex', 'items-center', 'space-x-2', 'py-2', 'px-4', 'relative', 'w-full', 'hover:bg-blue-600', 'hover:text-white', 'cursor-pointer');
+            listElement.classList.add('flex', 'text-gray-900', 'items-center', 'py-2', 'px-4', 'relative', 'w-full', 'hover:bg-indigo-600', 'hover:text-white', 'cursor-pointer');
             listElement.setAttribute('latitude', result.item.latitude);
             listElement.setAttribute('longitude', result.item.longitude);
             listElement.setAttribute('cityId', result.item.cityId);

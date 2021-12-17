@@ -19,7 +19,7 @@
 <body>
     <div class="relative min-h-screen md:flex" data-dev-hint="container">
 
-        <aside id="sidebar"
+        <!-- <aside id="sidebar"
             class="bg-gray-800 text-gray-100 w-1/6 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto"
             data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
             <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
@@ -40,9 +40,9 @@
                     </div>
                     <!-- <p class="flex items-center space-x-2 py-2 px-4"><span><strong>Date: </strong></span><input
                             type="date" class="rounded bg-gray-600 w-full" id="startDate" /><span></p> -->
-                    <!-- <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input -->
-                    <!-- type="date" class="rounded bg-gray-600 w-full" id="endDate" /></p> -->
-                    <p class="flex items-center space-x-2 py-2 px-4">
+        <!-- <p class="flex items-center space-x-2 py-2 px-4"><strong>End Date: </strong></span><input -->
+        <!-- type="date" class="rounded bg-gray-600 w-full" id="endDate" /></p> -->
+        <!-- <p class="flex items-center space-x-2 py-2 px-4">
                         <button id="displayData"
                             class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-150 w-full text-center">
                             Predict for Next 7 Days
@@ -50,19 +50,46 @@
                     </p>
                 </nav>
             </div>
-        </aside>
+        </aside> -->
+
+
 
         <main id="content" class="flex-1 p-6 lg:px-8 h-screen overflow-y-auto">
-            <!-- <div class="mx-auto px-3 py-6">
-                <button
-                    class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md text-white bg-gray-700">
-                    Map
-                </button>
-                <button
-                    class="text-center px-6 py-2 border border-gray-400 text-xl font-medium rounded-md bg-gray-100 hover:bg-gray-200">
-                    Graph
-                </button>
-            </div> -->
+            <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
+                <div class="container flex flex-wrap items-center justify-between mx-auto">
+                    <div class="flex" title="Analyzing Climate Change using Earth Surface Temperature Visualization">
+                        <span class="text-xl font-extrabold whitespace-nowrap truncate">Analyzing Climate Change
+                            using
+                            Earth Surface Temperature Visualization</span>
+                    </div>
+                    <div class="flex md:order-2">
+                        <div class="relative hidden mr-3 md:mr-0 md:block">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <input type="text"
+                                class="block w-full p-2 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Search for a city..." id="citySearch" autocomplete="off" />
+                            <div id="result_container"
+                                class="absolute w-full p-2 bg-white top-10 -left-0 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm max-h-64 overflow-y-auto hidden" style="z-index: 1000;">
+                                <ul id="results" class="list-reset h-full block"></ul>
+                            </div>
+                        </div>
+                        <button id="displayData"
+                            class="inline-flex items-center px-4 py-1 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-600 hover:bg-indigo-700 text-center ml-3">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </nav>
             <div class="h-3/4 mx-auto">
                 <div class="border-4 border-dashed border-gray-200 rounded-lg h-full">
                     <div id="map"></div>
