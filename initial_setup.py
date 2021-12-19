@@ -2,7 +2,6 @@ import sys
 import requests
 import subprocess
 from os.path import exists
-from libs.decompressor import decompress_arima
 
 subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
